@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>번호</td>
+            <td>사진</td>>
+            <td>이름</td>
+            <td>가격</td>
+            <td>카테고리</td>
+            <td>파일여부</td>
+        </tr>
+        <tr th:each="dtos : ${dtos}">
+            <td th:text="${dtos.idx}"></td>
+            <td><img th:src="@{|/thumb/Thumb_${dtos.storedFile}|}" ></td>
+            <td th:text="${dtos.name}"></td>
+            <td th:text="${dtos.price}"></td>
+            <td th:text="${dtos.fileAttached}"></td>
+            <td><a th:href="@{|/Admin/modify/${dtos.idx}|}"><button>수정</button></a></td>
+            <td><a th:href="@{|/Admin/delete/${dtos.idx}|}"><button>삭제</button></a></td>
+        </tr>
+    </table>
+</body>
+</html>
+

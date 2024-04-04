@@ -1,0 +1,153 @@
+/*  body 전체 */
+
+body {
+    width: auto;
+    height: auto;
+}
+#wrap {
+    border: 1px solid black;
+    height: 1000px;
+     background-image: url('/img/home.jpg');
+     background-size: cover; /* 이미지를 요소에 맞게 자동으로 조정합니다 */
+     background-position: center; /* 이미지를 가운데 정렬합니다 */
+     background-repeat: no-repeat;
+}
+/* 헤더부분*/
+@media(min-width:1000px) {
+    #container {
+        display: grid; /* div 요소들을 가로로 나란히 배치 */
+        align-items: center; /* 세로 방향 가운데 정렬 */
+        grid-template-columns: 0.8fr 1fr 1fr;
+    }
+}
+
+/*  */
+@media(max-width:999px) {
+    #container {
+     display: grid; /* div 요소들을 가로로 나란히 배치 */
+     align-items: center; /* 세로 방향 가운데 정렬 */
+     grid-template-columns: 0.8fr 1fr;
+    }
+}
+a {
+    text-decoration: none;
+}
+/*제목*/
+#title {
+    float: left;
+        text-align: left;
+        font-size: 26px;
+        letter-spacing: 2px;
+        line-height: 42px;
+        padding: 0 50px 0 24px;
+}
+#title h4 {
+    color: 	#292929;
+}
+
+@media (min-width: 1000px)  {
+     #nav {
+          padding: 0 20px 0 0;
+    }
+    #ca1,#ca2,#ca3{
+        padding: 0;
+        margin: 0;
+        list-style:none;
+    }
+    #ca1 {
+         position:fixed;
+         font-size: 14px
+    }
+    #ca1 li {
+        float:inline-start;
+        padding: 0 20px;
+    }
+    #ca2 {
+       height: 0;
+       position: relative;
+       overflow:hidden;
+       font-size: 20px
+    }
+    #ca3 {
+           height: 0;
+           overflow:hidden;
+           font-size: 14px
+        }
+    #ca2 li{
+        float:none;
+    }
+    #ca1 li:hover #ca2 {
+        height:auto;
+
+    }
+     #ca3 li{
+       float:none;
+     }
+     #ca2 li:hover #ca3 {
+        height:auto;
+
+     }
+
+
+
+}
+
+
+@media (max-width:999px) {
+    #nav {
+        display:none;
+    }
+}
+#nav a {
+    margin: 10px;
+}
+#nav2{
+    text-align:right;
+    font-size: 13px;
+    margin-right: 10px;
+}
+@media (max-width: 999px) {
+    #nav2 a {
+        text-align:right;
+    }
+}
+#nav2 a .logo {
+    width:21px;
+    margin: 5px;
+}
+@media (min-width: 1000px) {
+    #nav2 .menu {
+        display: none;
+    }
+}
+#item {
+    display: grid; /* div 요소들을 가로로 나란히 배치 */
+         align-items: center; /* 세로 방향 가운데 정렬 */
+         grid-template-columns: 1fr 1fr 1fr 1fr ;
+         list-style:none;
+}
+#category {
+    text-align: center;
+}
+#about {
+    display: grid; /* div 요소들을 가로로 나란히 배치 */
+             align-items: center; /* 세로 방향 가운데 정렬 */
+             grid-template-columns: 1fr 1fr ;
+             list-style:none;
+}
+#login {
+    text-align:center;
+}
+#form {
+    text-align:left;
+}
+#footer {
+    text-align:center;
+}
+#myPage_btn {
+    text-align: center;
+}
+#page {
+    text-align: center;
+}
+

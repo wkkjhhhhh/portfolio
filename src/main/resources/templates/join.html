@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게터세터</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+<div id="about_wrap">
+    <th:block th:replace="~{/standard}"></th:block>
+    <div>
+        <h2 id="category">JOIN</h2>
+    </div>
+    <div id="form">
+        <form action="/join_proc" name="fm" onsubmit="return join_btn()" method="post">
+        <table align="center">
+            <tr>
+                <td>아이디</td>
+                <td>
+                    <input type="text" name="userid" id="userid" style="width:400px" required onchange="checkId()">
+                </td>
+            </tr>
+            <tr></tr>
+            <tr><td></td>
+                <td>
+                    <span id="id_ok" class="id_ok" style="color:green; display:none;">
+                        사용가능한 아이디 입니다.</span>
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>비밀번호</td>
+                <td><input type="password" name="pwd"  style="width:400px"></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>비밀번호확인</td>
+                <td><input type="password" name="pwd2"  style="width:400px"></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>이름</td>
+                <td><input type="text" name="name" style="width:400px"></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>휴대전화</td>
+                <td>
+                    <select name="phone1">
+                        <option value="">선택</option>
+                        <option value="010">010</option>
+                        <option value="011">011</option>
+                        <option value="016">016</option>
+                        <option value="019">019</option>
+                    </select>
+                    -<input type="text" name="phone2">-
+                    <input type="text" name="phone3">
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>이메일</td>
+                <td><input type="text" name="email" style="width:400px"></td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td>
+                    <input type="submit" value="회원가입">
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</div>
+<div id="footer">
+    copyRightⓒ
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+    function checkId() {
+        var userid = $('#userid').val();
+        console.log(userid);
+        $.ajax({
+            url: '/idcheck',
+            type: 'post',
+            contentType: 'application/json; charset=utf-8', // 데이터 형식을 JSON으로 명시
+            data: JSON.stringify({ userid: userid }), // 데이터 형식을 JSON으로 변경
+            success: function(response) {
+                if (response == 0) { //중복 x
+                    $('.id_ok').css("display","block");
+                    document.getElementById("id_ok").innerHTML ="사용할수 있는 아이디 입니다.";
+                    $('.id_ok').css("color","green");
+                  } else { //중복
+                    $('.id_ok').css("display","block");
+                    $('.id_ok').css("color","red");
+                    document.getElementById("id_ok").innerHTML ="중복된 아이디 입니다.";
+                  }
+            },
+            error: function() {
+                alert("에러입니다");
+            }
+        });
+    }
+</script>
+<script src="/js/index.js"></script>
+</html>

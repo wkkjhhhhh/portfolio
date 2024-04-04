@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+<div id="about_wrap">
+    <th:block th:replace="~{/standard}"></th:block>
+    <div>
+        <h2 id="category">MyPage</h2>
+    </div>
+    <div id="mypage">
+        <table border="1" align="center">
+            <tr>
+                <td>이름</td>
+                <td th:text="${member.name}"></td>
+            </tr>
+            <tr>
+                <td>아이디</td>
+                <td th:text="${member.userid}"></td>
+            </tr>
+            <tr>
+                <td>잔화번호</td>
+                <td th:text="${member.phone}"></td>
+            </tr>
+            <tr>
+                <td>이메일</td>
+                <td th:text="${member.email}"></td>
+            </tr>
+            <tr>
+                <td>예치금</td>
+                <td th:text="${member.deposit}"></td>
+            </tr>
+        </table>
+    </div>
+    <div id="myPage_btn">
+        <button onclick="modifyReq()">수정</button>
+        <button onclick="deleteReq()">회원탈퇴</button>
+        <button onclick="findReq()">주문 조회</button>
+        <button onclick="depositReq()">예치금 충전</button>
+    </div>
+</div>
+<div id="footer">
+    copyRightⓒ
+</div>
+</body>
+<script>
+    const menu = () => {
+        const aside = document.getElementById('aside');
+           aside.style.display = 'block';
+    }
+</script>
+</html>

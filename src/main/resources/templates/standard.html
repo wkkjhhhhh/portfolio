@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<aside id="aside" style="display:none">
+    <div id="myaccount">
+        <a href="#">login</a>
+        <a href="#">join</a>
+        <a href="#">cart</a>
+    </div>
+    <div id="sildeList">
+    </div>
+</aside>
+<div id="container">
+
+    <div id="title">
+        <a href="/home">
+            <h4>Getter-Setter</h4>
+        </a>
+    </div>
+    <div id="nav">
+        <ul id="ca1">
+            <li th:each="first : ${first}" th:if="${first.second} == 0">
+                <a th:text="${first.categoryName}"></a>
+                <ul id="ca2">
+                    <li th:each="second : ${second}" th:if="${first.first} == ${second.first} and ${second.second} !=0 and ${second.third} == 0">
+                        <a th:text="${second.categoryName}"></a>
+                        <ul id="ca3">
+                            <li th:each="third : ${third}" th:if="${third.first} == ${second.first} and ${second.second} == ${third.second} and ${third.third} !=0">
+                                <a th:href="@{|/category/list/${third.idx}|}" th:text="${third.categoryName}"></a>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="/category/about">
+                    ABOUT
+                </a>
+            </li>
+            <li>
+                <a href="/category/community">
+                    COMMUNITY
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id="nav2">
+        <th:block sec:authorize="isAnonymous()">
+            <a href="/login">
+                <img src="/img/join.png" class="logo">
+            </a>
+        </th:block>
+        <th:block sec:authorize="hasRole('ROLE_USER')">
+            <a href="/mypage">
+                <img src="/img/join.png" class="logo">
+            </a>
+        </th:block>
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+            <a href="/Admin/admin">
+                <img src="/img/admin.png" class="logo">
+            </a>
+        </th:block>
+        <th:block sec:authorize="hasRole('ROLE_USER')">
+            <a href="/logout">
+                <img src="/img/logout.png" class="logo">
+            </a>
+        </th:block>
+        <a href="/search">
+            <img src="/img/search.png" class="logo">
+        </a>
+        <a href="/cart">
+            <img src="/img/cart.png" class="logo">
+        </a>
+        <a onclick="menu()" class="menu">
+            <img src="/img/menu.png" class="logo">
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

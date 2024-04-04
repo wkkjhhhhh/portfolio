@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/Admin/select" method="post">
+    <select name="first" id="first" onchange="changeFirst()">
+        <option value="">선택</option>
+        <option th:each="category : ${category}" th:value="${category.first}" th:text="${category.categoryName}"></option>
+        <option th:value="${FirstValue}" id="add">추가</option>
+    </select>
+    <select name="second" id="second" style="display:none;" onchange="changeSecond()">
+        <option value="0" selected>선택</option>
+        <option value="1">추가</option>
+    </select>
+    <select name="third" id="third" style="display:none;">
+        <option value="0" selected>선택</option>
+        <option value="1">추가</option>
+    </select>
+    <input type="text" name="name" id="CategoryName">
+    <input type="submit" value="생성">
+    </form>
+</body>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script th:inline="javascript">
+
+     const changeFirst = () => {
+        var first = document.getElementById('first').value;
+        var second = document.getElementById('second').value;
+        var add = document.getElementById('add').value;
+
+
+if(first != "" && first != add) {
+        $.ajax({
+            url: '/Admin/first',
+            data: { first: first, second:second },
+            dataType: 'json',
+            type: 'POST',
+            success: function(data) {
+                document.getElementById('second').style.display = 'block';
+                // 요청이 성공했을 때 실행할 코드
+                 if(Object.keys(data).length === 0) {
+                    alert("추가만 가능합니다");
+                 }else{
+                    $('#second').empty();
+                     $('#second').append($('<option>', {
+                        value: "0", // 서버에서 받은 데이터로 옵션 생성
+                        text: "선택"
+                    }));
+                    $('#second').append($('<option>', {
+                        value: data[0].second +1, // 서버에서 받은 데이터로 옵션 생성
+                        text: "추가",
+                        id : "check1"
+                    }));
+                    $.each(data, function(index, value) {
+                    $('#second').append($('<option>', {
+                        value: value.second, // 서버에서 받은 데이터로 옵션 생성
+                        text: value.categoryName
+                    }));
+                });
+                }
+            },
+            error: function() {
+                // 요청이 실패했을 때 실행할 코드
+                console.log('Failed to load page');
+            }
+        });
+        }else {
+            document.getElementById('second').style.display = 'none';
+            document.getElementById('third').style.display = 'none';
+            $('#second').empty();
+                     $('#second').append($('<option>', {
+                        value: "0", // 서버에서 받은 데이터로 옵션 생성
+                        text: "선택",
+                        selected: true // 선택된 상태로 설정
+                    }));
+            $('#third').empty();
+                    $('#third').append($('<option>', {
+                        value: "0", // 서버에서 받은 데이터로 옵션 생성
+                        text: "선택",
+                        selected: true // 선택된 상태로 설정
+                    }));
+        }
+     }
+    const changeSecond = () => {
+       var first = document.getElementById('first').value;
+        var second = document.getElementById('second').value;
+        var check1 = document.getElementById('check1').value;
+        if(second == "0" || second == check1) {
+             document.getElementById('third').style.display = 'none';
+        }else{
+        $.ajax({
+            url: '/Admin/first',
+            data: { first: first, second:second },
+            dataType: 'json',
+            type: 'POST',
+            success: function(data) {
+                document.getElementById('third').style.display = 'block';
+                // 요청이 성공했을 때 실행할 코드
+                 if(Object.keys(data).length === 0) {
+                    alert("추가만 가능합니다");
+                 }else{
+                    $('#third').empty();
+                     $('#third').append($('<option>', {
+                        value: "0", // 서버에서 받은 데이터로 옵션 생성
+                        text: "선택"
+                    }));
+                    $('#third').append($('<option>', {
+                        value: data[0].second +1, // 서버에서 받은 데이터로 옵션 생성
+                        text: "추가",
+                        id : "check2"
+                    }));
+                    $.each(data, function(index, value) {
+                    $('#third').append($('<option>', {
+                        value: value.third, // 서버에서 받은 데이터로 옵션 생성
+                        text: value.categoryName
+                    }));
+                });
+
+                }
+            },
+            error: function() {
+                // 요청이 실패했을 때 실행할 코드
+                console.log('Failed to load page');
+            }
+        });
+        }
+     }
+</script>
+</html>

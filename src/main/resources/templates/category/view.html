@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/view.css">
+</head>
+<body>
+
+<div id="about_wrap">
+    <th:block th:replace="~{/standard}"></th:block>
+    <form action="/cart">
+    <div id="view">
+        <div id="view_div">
+            <div id="view_image"th:each="StoredFileName: ${dto.StoredFileName}">
+                    <img th:src="@{|/upload/${StoredFileName}|}" >
+            </div>
+        </div>
+        <div id="view_contents">
+            <div>
+                <strong><span th:text="${dto.name}"></span></strong>
+            </div>
+            <div>
+                <p><span th:text="${dto.price}"></span></p>
+            </div>
+            <div>
+                설명:
+                    <span th:each="content :${contents}">
+                        - <span th:text="${content}"></span><br><br>
+                    </span>
+            </div>
+            <br>
+            <div>
+                <span th:text="${dto.name}"></span><br>
+                <button onclick="quantityDown()">-</button>
+                <input type="number" id="quantity" name="quantity" value=1 readonly>
+                <button onclick="quantityUp()">+</button>
+                <span id="price" name="price" th:text="${#numbers.formatInteger(dto.price,0,'COMMA')}"></span>
+            </div>
+            <br>
+            <div>
+                <input type="hidden" name="item_idx" th:value="${dto.idx}">
+                <button onclick="buyReq()">BUY IT NOW</button>
+                <br>
+                <input type="submit" value="ADD TO CART">
+            </div>
+
+        </div>
+    </div>
+    </form>
+</div>
+<div id="footer">
+    copyRightⓒ
+</div>
+</body>
+<script>
+    const buyReq = () => {
+        location.href = "/buy";
+    }
+
+    var quantity = parseInt(document.getElementById('quantity').value); // quantity를 문자열에서 정수로 변환
+    var price = parseInt(document.getElementById('price').innerText); // 초기 가격 설정
+    var o_price = parseInt([[${dto.price}]]); // 상품의 원래 가격
+
+    console.log(o_price);
+    const quantityDown = () => {
+        if (quantity > 1) { // quantity가 1보다 큰 경우에만 감소하도록 조건 추가
+            quantity--;
+            price = o_price * quantity;
+            updatePrice(); // 가격 업데이트
+        }
+        document.getElementById('quantity').value = quantity; // quantity를 업데이트하여 입력 필드에 설정
+    }
+
+    const quantityUp = () => {
+        quantity++;
+        price = o_price * quantity;
+        updatePrice(); // 가격 업데이트
+        document.getElementById('quantity').value = quantity; // quantity를 업데이트하여 입력 필드에 설정
+    }
+    const updatePrice = () => {
+
+        var total = price.toLocaleString('ko-KR');
+        document.getElementById('price').innerText = total;
+
+    }
+
+</script>
+</html>

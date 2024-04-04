@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/Admin/modify_proc" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>이름</td>
+            <td><input type="text" name="name" th:value="${item.name}"></td>
+        </tr>
+        <tr>
+            <td>가격</td>
+            <td><input type="number" name="price" th:value="${item.price}"></td>
+        </tr>
+        <tr>
+            <td>설명</td>
+            <td><textarea rows="10" name="contents">[[${item.contents}]]</textarea></td>
+        </tr>
+        <tr>
+            <td>카테고리</td>
+            <td>
+                <select name="first" id="first" onchange="changeFirst()">
+                    <option value="">선택</option>
+                    <option th:each="category : ${category1}"
+                            th:value="${category.first}"
+                            th:text="${category.name}"
+                            th:selected="${category.first == item.getCategory().getFirst()}"></option>
+                </select>
+
+                <select name="second" id="second" onchange="changeSecond()">
+                    <option value="0" selected>선택</option>
+                    <option th:each="category : ${category2}"
+                            th:value="${category.second}"
+                            th:text="${category.name}"
+                            th:selected="${category.second == item.getCategory().getSecond()}"></option>
+                </select>
+
+                <select name="third" id="third">
+                    <option value="0" selected>선택</option>
+                    <option th:each="category : ${category3}"
+                            th:value="${category.third}"
+                            th:text="${category.name}"
+                            th:selected="${category.third == item.getCategory().getThird()}"></option>
+                </select>
+            </td>
+        </tr>
+        <th:block>
+            <tr th:each="fileName,fileNameStat : ${item.storedFileName}">
+                <td><input type="checkbox"  name="check" onclick="test(this.value)" th:value="check+${fileNameStat.count}"></td>
+                <td>
+                    <img th:if="${item.storedFileName.get(fileNameStat.index) !='Null' }" th:src="@{|/upload/${item.storedFileName.get(fileNameStat.index)}|}" width="200px" height="200px">
+                    <input type="file" name="itemFile" class="itemFile">
+                    <input type="checkbox" value="uncheck"  th:id="check+${fileNameStat.count}" name="check1" style="display:none" checked>
+                </td>
+            </tr>
+        </th:block>
+        <tr>
+            <td>
+                <input type="hidden" th:value="${item.idx}" name="idx">
+                <input type="submit" value="수정">
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script th:inline="javascript">
+
+    const changeFirst = () => {
+       var first = document.getElementById('first').value;
+       var second = document.getElementById('second').value;
+    if(first != "") {
+           $.ajax({
+                url: '/Admin/first',
+                data: { first: first, second:second},
+                dataType: 'json',
+                type: 'POST',
+                success: function(data) {
+                    // 요청이 성공했을 때 실행할 코드
+
+                        $('#second').empty();
+                         $('#second').append($('<option>', {
+                            value: "0", // 서버에서 받은 데이터로 옵션 생성
+                            text: "선택"
+                        }));
+                        $.each(data, function(index, value) {
+                        $('#second').append($('<option>', {
+                            value: value.second, // 서버에서 받은 데이터로 옵션 생성
+                            text: value.categoryName
+                        }));
+                    });
+                    $('#third').empty();
+                     $('#third').append($('<option>', {
+                        value: "0", // 서버에서 받은 데이터로 옵션 생성
+                        text: "선택"
+                    }));
+
+                },
+                error: function() {
+                    // 요청이 실패했을 때 실행할 코드
+                    console.log('Failed to load page');
+                }
+            });
+            }else {
+
+                $('#second').empty();
+                         $('#second').append($('<option>', {
+                            value: "0", // 서버에서 받은 데이터로 옵션 생성
+                            text: "선택",
+                            selected: true // 선택된 상태로 설정
+                        }));
+                $('#third').empty();
+                        $('#third').append($('<option>', {
+                            value: "0", // 서버에서 받은 데이터로 옵션 생성
+                            text: "선택",
+                            selected: true // 선택된 상태로 설정
+                        }));
+            }
+}
+       const changeSecond = () => {
+           var first = document.getElementById('first').value;
+           var second = document.getElementById('second').value;
+
+
+        if(second == "0") {
+        }else{
+        $.ajax({
+            url: '/Admin/first',
+            data: { first: first, second:second },
+            dataType: 'json',
+            type: 'POST',
+            success: function(data) {
+                // 요청이 성공했을 때 실행할 코드
+                    $('#third').empty();
+                     $('#third').append($('<option>', {
+                        value: "0", // 서버에서 받은 데이터로 옵션 생성
+                        text: "선택"
+                    }));
+                    $.each(data, function(index, value) {
+                    $('#third').append($('<option>', {
+                        value: value.idx, // 서버에서 받은 데이터로 옵션 생성
+                        text: value.categoryName
+                    }));
+                });
+            },
+            error: function() {
+                // 요청이 실패했을 때 실행할 코드
+                console.log('Failed to load page');
+            }
+        });
+        }
+ }
+</script>
+<script>
+    function test(id) {
+        var checkId = id;
+        var result = document.getElementById(checkId).value;
+
+        if(result == "uncheck") {
+               document.getElementById(id).value = "checked";
+            }else {
+               document.getElementById(id).value = "uncheck";
+           }
+}
+</script>
+</html>

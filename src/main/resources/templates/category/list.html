@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+
+<div id="about_wrap">
+    <th:block th:replace="~{/standard}"></th:block>
+    <div>
+        <h2 id="category" th:text="${CategoryName}"></h2>
+    </div>
+    <div id="main">
+       <!-- <div th:if="${#lists.isEmpty(dtos.getContent())}">상품이 없습니다.</div>
+                css 고치고 사용가능-->
+        <ul id="item" th:unless="${#lists.isEmpty(dtos.getContent())}">
+            <li th:each="dto :${dtos}">
+                <div>
+                    <a th:href="@{|/category/view/${dto.idx}|}">
+                        <img th:src="@{|/thumb/Thumb_${dto.storedFile}|}" width="400px" height="400px">
+                        <div th:text="${dto.name}"></div>
+                        <div th:text="${dto.price}"></div>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="page">
+            <!-- 첫번째 페이지로 이동 -->
+            <!-- /board/paging?page=1 -->
+            <a th:href="@{/category/list/{idx}(idx=${Category_idx},page=1)}">◀</a>
+            <!-- 이전 링크 활성화 비활성화 -->
+            <!-- boardList.getNumber() 사용자:2페이지 getNumber()=1 -->
+            <a th:href="${dtos.first} ? '#' : @{/category/list/{idx}(idx=${Category_idx},page=${dtos.number - 1})}">prev</a>
+
+            <!-- 페이지 번호 링크(현재 페이지는 숫자만)
+                        for(int page=startPage; page<=endPage; page++)-->
+            <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
+             <!-- 현재페이지는 링크 없이 숫자만 -->
+            <span th:if="${page == dtos.number + 1}" th:text="${page}"></span>
+                <!-- 현재페이지 번호가 아닌 다른 페이지번호에는 링크를 보여줌 -->
+            <span th:unless="${page == dtos.number + 1}">
+                <a th:href="@{/category/list/{idx}(idx=${Category_idx},page=${page})}" th:text="${page}"></a>
+            </span>
+            </span>
+
+            <!-- 다음 링크 활성화 비활성화
+                사용자: 2페이지, getNumber: 1, 3페이지-->
+            <a th:href="${dtos.last} ? '#' : @{/category/list/{idx}(idx=${Category_idx},page=${dtos.number + 1})}">next</a>
+
+                <!-- 마지막 페이지로 이동 -->
+            <a th:href="@{/category/list/{idx}(idx=${Category_idx},page=${dtos.totalPages})}">▶</a>
+
+    </div>
+</div>
+<div id="footer">
+    copyRightⓒ
+</div>
+</body>
+<script>
+
+</script>
+</html>

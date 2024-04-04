@@ -1,0 +1,18 @@
+#view {
+    display:grid;
+    align-items: center; /* 세로 방향 가운데 정렬 */
+    grid-template-columns: 1.8fr 0.6fr;
+}
+#view_div {
+    margin:90px;
+}
+#view_contents {
+    position: fixed;
+    width: 450px;
+    top: 50%; /* Adjust as needed */
+    left: 80%; /* Adjust as needed */
+    transform: translate(-50%, -50%);
+    background-color: white; /* Ensure it's readable */
+    padding: 50px;
+    border: 6px solid #ccc; /* Add borders for clarity */
+    }

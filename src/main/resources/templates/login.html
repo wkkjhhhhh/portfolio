@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게터세터</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+<div id="about_wrap">
+    <th:block th:replace="~{/standard}"></th:block>
+    <div>
+        <h2 id="category">LOGIN</h2>
+    </div>
+
+
+    <div id="login">
+        <form action="/login_proc" method="post">
+        <input type="text" name="userid" placeholder="아이디"><br>
+        <input type="password" name="pwd" placeholder="패스워드"><br>
+        <input type="submit" value="로그인">
+        </form>
+        <br>
+        <button onclick="join()">회원가입</button>
+    </div>
+
+
+</div>
+<div id="footer">
+    copyRightⓒ
+</div>
+</body>
+<script>
+    const menu = () => {
+        const aside = document.getElementById('aside');
+           aside.style.display = 'block';
+    }
+
+    const join = () => {
+        alert("회원가입을 진행합니다.");
+        location.href='/join';
+    }
+</script>
+</html>

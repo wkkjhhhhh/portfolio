@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/Admin/save" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>이름</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>가격</td>
+            <td><input type="number" name="price"></td>
+        </tr>
+        <tr>
+            <td>설명</td>
+            <td><textarea rows="10" name="contents"></textarea></td>
+        </tr>
+        <tr>
+            <td>카테고리</td>
+            <td>
+                <select name="first" id="first" onchange="changeFirst()">
+                    <option value="">선택</option>
+                    <option th:each="category : ${category}" th:value="${category.first}" th:text="${category.categoryName}"></option>
+                </select>
+
+                <select name="second" id="second" style="display:none;" onchange="changeSecond()">
+                    <option value="0" selected>선택</option>
+                </select>
+
+                <select name="third" id="third" style="display:none;">
+                    <option value="0" selected>선택</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>옷 사진</td>
+            <td>썸네일
+                <input type="file" name="itemFile">
+                <input type="file" name="itemFile">
+                <input type="file" name="itemFile"></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="submit" value="등록">
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script th:inline="javascript">
+
+    const changeFirst = () => {
+       var first = document.getElementById('first').value;
+       var second = document.getElementById('second').value;
+    if(first != "") {
+           $.ajax({
+                url: '/Admin/first',
+                data: { first: first, second:second},
+                dataType: 'json',
+                type: 'POST',
+                success: function(data) {
+                    document.getElementById('second').style.display = 'block';
+                    // 요청이 성공했을 때 실행할 코드
+
+                        $('#second').empty();
+                         $('#second').append($('<option>', {
+                            value: "0", // 서버에서 받은 데이터로 옵션 생성
+                            text: "선택"
+                        }));
+                        $.each(data, function(index, value) {
+                        $('#second').append($('<option>', {
+                            value: value.second, // 서버에서 받은 데이터로 옵션 생성
+                            text: value.categoryName
+                        }));
+                    });
+
+                },
+                error: function() {
+                    // 요청이 실패했을 때 실행할 코드
+                    console.log('Failed to load page');
+                }
+            });
+            }else {
+                document.getElementById('second').style.display = 'none';
+                document.getElementById('third').style.display = 'none';
+                $('#second').empty();
+                         $('#second').append($('<option>', {
+                            value: "0", // 서버에서 받은 데이터로 옵션 생성
+                            text: "선택",
+                            selected: true // 선택된 상태로 설정
+                        }));
+                $('#third').empty();
+                        $('#third').append($('<option>', {
+                            value: "0", // 서버에서 받은 데이터로 옵션 생성
+                            text: "선택",
+                            selected: true // 선택된 상태로 설정
+                        }));
+            }
+}
+       const changeSecond = () => {
+           var first = document.getElementById('first').value;
+           var second = document.getElementById('second').value;
+
+
+        if(second == "0") {
+             document.getElementById('third').style.display = 'none';
+        }else{
+        $.ajax({
+            url: '/Admin/first',
+            data: { first: first, second:second },
+            dataType: 'json',
+            type: 'POST',
+            success: function(data) {
+                document.getElementById('third').style.display = 'block';
+                // 요청이 성공했을 때 실행할 코드
+                    $('#third').empty();
+                     $('#third').append($('<option>', {
+                        value: "0", // 서버에서 받은 데이터로 옵션 생성
+                        text: "선택"
+                    }));
+                    $.each(data, function(index, value) {
+                    $('#third').append($('<option>', {
+                        value: value.idx, // 서버에서 받은 데이터로 옵션 생성
+                        text: value.categoryName
+                    }));
+                });
+            },
+            error: function() {
+                // 요청이 실패했을 때 실행할 코드
+                console.log('Failed to load page');
+            }
+        });
+        }
+ }
+</script>
+</html>

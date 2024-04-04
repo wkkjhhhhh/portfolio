@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>번호</th>
+        <th>아이디</th>
+        <th>이름</th>
+        <th>휴대폰</th>
+        <th>이메일</th>
+        <th>예치금</th>
+        <th>등록날짜</th>
+        <th></th>
+    </tr>
+    <tr th:each="board: ${member}">
+        <td th:text="${board.idx}"></td>
+        <td th:text="${board.userid}"></td>
+        <td th:text="${board.name}"></td>
+        <td th:text="${board.phone1 + '-' + board.phone2 + '-' + board.phone3}"></td>
+        <td th:text="${board.email}"></td>
+        <td th:text="${board.deposit}"></td>
+        <td th:text="*{#temporals.format(board.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td>
+            <a th:href="@{|/Admin/MemberDelete/${board.idx}|}">
+                <button>삭제</button>
+            </a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

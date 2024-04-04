@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+<th:block th:replace="~{/standard}"></th:block>
+<h2 id="category">장바구니</h2>
+<table align="center" border="1">
+    <tr>
+        <td></td>
+        <td>상품사진</td>
+        <td>상품이름</td>
+        <td>수량</td>
+        <td>가격</td>
+        <td>삭제</td>
+    </tr>
+    <tr th:each="dto: ${dto}">
+        <td>
+            <input type="checkbox" name="check">
+        </td>
+        <td>
+            <img th:src="@{|/thumb/Thumb_${dto.item.itemFileEntities.get(0).StoredFileName}|}" style="width:150px; height:150px;">
+        </td>
+        <td th:text="${dto.item.name}"></td>
+        <td>
+            <button onclick="plus()">+</button>
+            <span  id="quantity" th:text="${dto.quantity}"></span>
+            <button onclick="minus()">-</button>
+        </td>
+
+        <td th:text="${#numbers.formatInteger(dto.item.price,0,'COMMA')}+'원'"></td>
+        <td>
+            <button onclick="deleteReq()">삭제</button>
+        </td>
+    </tr>
+</table>
+</body>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+
+</script>
+</html>
