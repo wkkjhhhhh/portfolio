@@ -111,8 +111,11 @@ public class ShopController {
 
         return "cart";
     }
+    @PostMapping("/updateCart")
+    public String updateCart() {
 
-
+     return "";
+    }
 
     @GetMapping("/mypage")
     public String mypage(@AuthenticationPrincipal CustomUserDetails customUserDetails,Model model) {
