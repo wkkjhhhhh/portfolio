@@ -18,6 +18,7 @@ import portfolio.test1.config.CustomUserDetails;
 import portfolio.test1.entity.CartEntity;
 import portfolio.test1.entity.CategoryEntity;
 
+import javax.naming.Name;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -111,10 +112,17 @@ public class ShopController {
 
         return "cart";
     }
-    @PostMapping("/updateCart")
-    public String updateCart() {
 
-     return "";
+    /**
+     *
+     * @param idx 카트에 idx
+     * @param quantity 새로 넣을 아이템 갯수
+     */
+    @PostMapping("/updateCart")
+    @ResponseBody
+    public void updateCart(@RequestParam("idx")Long idx,
+                             @RequestParam("quantity")int quantity) {
+    itemService.update(idx,quantity);
     }
 
     @GetMapping("/mypage")

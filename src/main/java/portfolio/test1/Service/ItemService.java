@@ -170,4 +170,12 @@ public class ItemService {
         }
         return cart;
     }
+
+    public void update(Long idx, int quantity) {
+
+        CartEntity cartEntity = cartRepository.findById(idx).orElse(null);
+        cartEntity.setQuantity(quantity);
+
+        cartRepository.save(cartEntity);
+    }
 }
