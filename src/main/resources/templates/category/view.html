@@ -63,7 +63,6 @@
     var price = parseInt(document.getElementById('price').innerText); // 초기 가격 설정
     var o_price = parseInt([[${dto.price}]]); // 상품의 원래 가격
 
-    console.log(o_price);
     const quantityDown = () => {
         if (quantity > 1) { // quantity가 1보다 큰 경우에만 감소하도록 조건 추가
             quantity--;

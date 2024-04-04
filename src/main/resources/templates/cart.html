@@ -19,27 +19,60 @@
     </tr>
     <tr th:each="dto: ${dto}">
         <td>
-            <input type="checkbox" name="check">
+            <input type="checkbox" th:id="'check_' + ${dto.idx}" th:value="${dto.idx}" name="check">
+            <input type="hidden" th:id="'price_' + ${dto.idx}" name="price" th:value="${dto.item.price}">
         </td>
         <td>
             <img th:src="@{|/thumb/Thumb_${dto.item.itemFileEntities.get(0).StoredFileName}|}" style="width:150px; height:150px;">
         </td>
         <td th:text="${dto.item.name}"></td>
         <td>
-            <button onclick="plus()">+</button>
-            <span  id="quantity" th:text="${dto.quantity}"></span>
-            <button onclick="minus()">-</button>
+            <button type="button" th:onclick="'quantityDown(\'' + ${dto.idx} + '\')'">-</button>
+            <input type="number" th:id="'quantity_' + ${dto.idx}" name="quantity" th:value="${dto.quantity}" readonly>
+            <button type="button" th:onclick="'quantityUp(\'' + ${dto.idx} + '\')'">+</button>
         </td>
-
-        <td th:text="${#numbers.formatInteger(dto.item.price,0,'COMMA')}+'원'"></td>
+        <td th:id="'totalPrice_' + ${dto.idx}" th:text="${#numbers.formatInteger(dto.item.price * dto.quantity, 0, 'COMMA')} + '원'"></td>
         <td>
-            <button onclick="deleteReq()">삭제</button>
+            <button type="button" th:onclick="'deleteReq(\'' + ${dto.idx} + '\')'">삭제</button>
         </td>
     </tr>
 </table>
 </body>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+        const quantityDown = (idx) => {
+        var quantityInput = document.getElementById('quantity_' + idx);
+        var totalPriceTd = document.getElementById('totalPrice_' + idx);
+        var quantity = parseInt(quantityInput.value);
+        var price = parseInt(document.getElementById('price_' + idx).value);
+        var totalPrice = price * quantity;
 
+        if (quantity > 1) {
+            quantity--;
+            totalPrice = price * quantity;
+            updatePrice(totalPrice, totalPriceTd);
+        }
+
+        quantityInput.value = quantity;
+    }
+
+    const quantityUp = (idx) => {
+        var quantityInput = document.getElementById('quantity_' + idx);
+        var totalPriceTd = document.getElementById('totalPrice_' + idx);
+        var quantity = parseInt(quantityInput.value);
+        var price = parseInt(document.getElementById('price_' + idx).value);
+        var totalPrice = price * quantity;
+
+        quantity++;
+        totalPrice = price * quantity;
+        updatePrice(totalPrice, totalPriceTd);
+
+        quantityInput.value = quantity;
+    }
+
+    const updatePrice = (totalPrice, totalPriceTd) => {
+        var total = totalPrice.toLocaleString('ko-KR');
+        totalPriceTd.innerText = total + '원';
+    }
 </script>
 </html>
