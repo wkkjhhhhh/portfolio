@@ -1,4 +1,4 @@
-```
+
       <td>삭제</td>
     </tr>
     <tr th:each="dto: ${dto}">
@@ -21,4 +21,4 @@
         </td>
     </tr>
 </table>
-```
+
