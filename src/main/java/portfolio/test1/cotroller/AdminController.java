@@ -55,7 +55,7 @@ public class AdminController {
     @GetMapping("/write") // <- 상품등록 ? 이라면
     public String write(Model model) {
         LOGGER.info("[상품 정보] 상품등록 페이지 입니다.");
-        LOGGER.info("[환경 변수] 현재 등록된 환경 변수: "+path);
+
 
         List<CategoryEntity> all = categoryRepository.findFirst();
         model.addAttribute("category",all);
@@ -99,7 +99,7 @@ public class AdminController {
         }
 
          ItemDTO dto = itemService.findById(idx);
-        dto.setC_Idx(childIdx);
+        dto.setC_idx(childIdx);
 
         String first = dto.getCategory().getFirst();
         String second = dto.getCategory().getSecond();

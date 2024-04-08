@@ -5,7 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import portfolio.test1.DTO.MemberDTO;
-import portfolio.test1.DTO.MyPageDto;
+import portfolio.test1.DTO.MyUserDto;
 import portfolio.test1.Repositiry.MemberRepository;
 import portfolio.test1.entity.MemberEntity;
 
@@ -45,13 +45,13 @@ public class MemberService {
     }
 
     // view (my page)
-    public MyPageDto findUserid(String username) {
+    public MyUserDto findUserid(String username) {
        Optional<MemberEntity> member = memberRepository.findByUserid(username);
 
         if(member.isPresent()) {
             MemberEntity entity = member.get();
 
-            return  MyPageDto.builder()
+            return  MyUserDto.builder()
                     .userid(entity.getUserid())
                     .name(entity.getName())
                     .phone(entity.getPhone())

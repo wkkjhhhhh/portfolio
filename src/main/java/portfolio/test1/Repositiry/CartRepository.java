@@ -9,5 +9,7 @@ import java.util.List;
 
 public interface CartRepository extends JpaRepository<CartEntity,Long> {
     List<CartEntity> findByUsername(String username);
+
+
 }
 

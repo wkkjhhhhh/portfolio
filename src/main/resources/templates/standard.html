@@ -3,16 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 <aside id="aside" style="display:none">
-    <div id="myaccount">
-        <a href="#">login</a>
-        <a href="#">join</a>
-        <a href="#">cart</a>
-    </div>
-    <div id="sildeList">
-    </div>
+    <th:block th:replace="~{/aside}"></th:block>
 </aside>
 <div id="container">
 
@@ -74,11 +69,16 @@
         <a href="/cart">
             <img src="/img/cart.png" class="logo">
         </a>
-        <a onclick="menu()" class="menu">
+        <a onclick="menuReq()" class="menu">
             <img src="/img/menu.png" class="logo">
         </a>
     </div>
 </div>
-
+<script>
+    const menuReq = () => {
+        const aside = document.getElementById('aside');
+           aside.style.display = 'block';
+    }
+</script>
 </body>
 </html>

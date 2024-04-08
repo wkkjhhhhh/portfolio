@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/view.css">
 </head>
 <body>
@@ -33,15 +32,15 @@
             <br>
             <div>
                 <span th:text="${dto.name}"></span><br>
-                <button onclick="quantityDown()">-</button>
+                <button type="button" onclick="quantityDown()">-</button>
                 <input type="number" id="quantity" name="quantity" value=1 readonly>
-                <button onclick="quantityUp()">+</button>
+                <button type="button" onclick="quantityUp()">+</button>
                 <span id="price" name="price" th:text="${#numbers.formatInteger(dto.price,0,'COMMA')}"></span>
             </div>
             <br>
             <div>
                 <input type="hidden" name="item_idx" th:value="${dto.idx}">
-                <button onclick="buyReq()">BUY IT NOW</button>
+                <button type="button" onclick="buyReq()">BUY IT NOW</button>
                 <br>
                 <input type="submit" value="ADD TO CART">
             </div>

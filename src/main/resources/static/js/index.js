@@ -1,8 +1,4 @@
-const menu = () => {
-        const aside = document.getElementById('aside');
-           aside.style.display = 'block';
-    }
-    function join_btn() {
+   function join_btn() {
         if(fm.userid.value == "") {
             alert('아이디를 입력해주세요');
             fm.userid.focus();

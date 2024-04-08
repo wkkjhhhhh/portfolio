@@ -120,9 +120,9 @@ public class ItemService {
             }
         }
         //썸네일 삭제
-        File Thumb = new File(path+"Thumb/"+thumb);
-        if(Thumb.exists()) {
-            Thumb.delete();
+        File ThumbNail = new File(path+"Thumb/"+thumb);
+        if(ThumbNail.exists()) {
+            ThumbNail.delete();
         }
 
         itemRepository.delete(item);

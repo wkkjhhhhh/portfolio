@@ -3,11 +3,9 @@ package portfolio.test1.DTO;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
-public class MyPageDto {
+public class MyUserDto {
 
     private String userid;
     private String name;

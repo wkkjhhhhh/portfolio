@@ -9,7 +9,7 @@
             updateTotalAmount();
         });
     });
-
+    //총 금액
     const updateTotalAmount = () => {
         var totalAmount = 0;
         $('input[type="checkbox"]:checked').each(function() {
@@ -20,8 +20,11 @@
         });
 
         $('#totalAmount').text(totalAmount.toLocaleString('ko-KR') + '원');
-    };
 
+        $('#totalPay').val(totalAmount.toLocaleString('ko-KR') + '원');
+
+    };
+        //아이템 수량 하나씩 빼기
         const quantityDown = (idx) => {
         var quantityInput = document.getElementById('quantity_' + idx);
         var totalPriceTd = document.getElementById('totalPrice_' + idx);
@@ -51,6 +54,7 @@
         });
 
     }
+    //아이템 수량 하나씩 더하기
     const quantityUp = (idx) => {
         var quantityInput = document.getElementById('quantity_' + idx);
         var totalPriceTd = document.getElementById('totalPrice_' + idx);

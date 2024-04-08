@@ -23,7 +23,7 @@ public class ItemDTO {
     private CategoryEntity category;
     private int price;
     private String contents;
-    private List<Long> c_Idx;
+    private List<Long> C_idx;
     //사진
     private List<MultipartFile> files;
     private List<String> originalFileName;

@@ -15,15 +15,11 @@ import portfolio.test1.DTO.ItemListDTO;
 import portfolio.test1.Service.CategoryItemService;
 import portfolio.test1.Service.ItemService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 @Controller
 @RequestMapping("/category")
 @RequiredArgsConstructor
 @Log4j2
-public class categoryController {
+public class CategoryController {
 
     private final CategoryItemService categoryItemService;
     private final ItemService itemService;
@@ -40,7 +36,7 @@ public class categoryController {
         return "/category/community";
     }
     @GetMapping("/list/{idx}")
-    public  String aaa(@PathVariable("idx")Long idx, Model model, @PageableDefault(page = 1) Pageable pageable){
+    public  String list(@PathVariable("idx")Long idx, Model model, @PageableDefault(page = 1) Pageable pageable){
 
         String CategoryName = categoryItemService.findById(idx);
         Page<ItemListDTO> dtos = itemService.paging(idx,pageable);

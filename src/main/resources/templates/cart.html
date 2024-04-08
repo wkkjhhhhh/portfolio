@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 <th:block th:replace="~{/standard}"></th:block>
 <h2 id="category">장바구니</h2>
+<form action="/buy" method="post">
 <table align="center" border="1">
     <tr>
         <td></td>
@@ -28,7 +28,7 @@
         <td th:text="${dto.item.name}"></td>
         <td>
             <button type="button" th:onclick="'quantityDown(\'' + ${dto.idx} + '\')'">-</button>
-            <input type="number" th:id="'quantity_' + ${dto.idx}" name="quantity" th:value="${dto.quantity}" readonly>
+            <input type="number" th:id="'quantity_' + ${dto.idx}" name="quantity" th:value="${dto.quantity}" readonly style="width:80px;">
             <button type="button" th:onclick="'quantityUp(\'' + ${dto.idx} + '\')'">+</button>
         </td>
         <td th:id="'totalPrice_' + ${dto.idx}" th:text="${#numbers.formatInteger(dto.item.price * dto.quantity, 0, 'COMMA')} + '원'"></td>
@@ -40,10 +40,31 @@
         <td colspan="6">
             총금액 :
             <span id="totalAmount">0원</span>
+            <input type="hidden" name="totalPay" id="totalPay" value="0원">
         </td>
     </tr>
-</table>
+    <tr>
+        <td colspan="6" align="center">
+            <input type="submit" value="결제하기">
+            <button type="button" onclick="backReq()">뒤로가기</button>
+        </td>
+    </tr>
+</table>s
+</form>
 </body>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/Cart.js"></script>
+<script th:inline="javascript">
+    /*카트 상품 삭제*/
+  function deleteReq(idx) {
+    if (confirm("정말 삭제하시겠습니까?")) {
+        location.href="/deleteCart?idx="+idx;
+    }else{
+        console.log("취소. 변화 없음");
+        }
+    }
+    function backReq() {
+        history.back();
+    }
+</script>
 </html>
