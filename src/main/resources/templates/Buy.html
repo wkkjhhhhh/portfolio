@@ -11,88 +11,123 @@
 </head>
 <body>
 <th:block th:replace="~{/standard}"></th:block>
-<div id="buy_table">
-<h3>회원정보</h3>
-<table>
-    <tr>
-        <td></td>
-        <td>회원정보</td>
-    </tr>
-    <tr>
-        <td>이름</td>
-        <td th:text="${user.name}"></td>
-    </tr>
-    <tr>
-        <td>번호</td>
-        <td th:text="${user.phone}"></td>
-    </tr>
-    <tr>
-        <td>예치금</td>
-        <td th:text="${user.deposit}"></td>
-    </tr>
-</table>
-<br>
-<table>
-    <tr>
-        <td>구매</td>
-    </tr>
-    <tr>
-        <td>사진</td>
-        <td>이름</td>
-        <td>수량</td>
-        <td>가격</td>
-    </tr>
-    <tr th:each="dtos:${dtos}">
-        <td><img th:src="@{|/thumb/Thumb_${dtos.item.itemFileEntities.get(0).StoredFileName}|}" ></td>
-        <td th:text="${dtos.item.name}"></td>
-        <td th:text="${dtos.quantity}"></td>
-        <td th:text="${#numbers.formatInteger(dtos.item.price * dtos.quantity, 0, 'COMMA')} + '원'"></td>
-    </tr>
-</table>
-<table>
-    <tr>
-        <td></td>
-        <td>배송지</td>
-    </tr>
-    <tr>
-        <td>이름</td>
-        <td>
-            <input type="text" name="username">
-        </td>
-    </tr>
-    <tr>
-        <td>전화번호</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>주소</td>
-        <td>
-            <input type="text" id="sample4_postcode" placeholder="우편번호">
-            <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-            <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
-            <input type="text" id="sample4_jibunAddress" placeholder="지번주소">
-            <span id="guide" style="color:#999;display:none"></span>
-            <input type="text" id="sample4_detailAddress" placeholder="상세주소">
-        </td>
-    </tr>
-    <tr>
-        <td>배송메세지</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>
-            <div class="title">결제 방법</div>
-            <div id="payment-method"></div>
-            <div id="agreement"></div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <!-- 결제 버튼 -->
-            <button id="payment-button">결제하기</button>
-        </td>
-    </tr>
-</table>
+<div id="buy_table" style="width:100%; text-align: -webkit-center;">
+    <form action="buy-item" method="post">
+    <h3>회원정보</h3>
+    <table border="1" style="width:50%;">
+        <tr>
+            <td colspan="2">회원정보</td>
+        </tr>
+        <tr>
+            <td>이름</td>
+            <td th:text="${user.name}" style="width: 600px;"></td>
+        </tr>
+        <tr>
+            <td>번호</td>
+            <td th:text="${user.phone}"></td>
+        </tr>
+        <tr>
+            <td>예치금</td>
+            <td th:text="${user.deposit}"></td>
+        </tr>
+    </table>
+    <br>
+        <h3>배송지</h3>
+    <table border="1" style="width:50%;">
+        <tr>
+            <td>이름</td>
+            <td>
+                <input type="text" name="username">
+            </td>
+        </tr>
+        <tr>
+            <td>전화번호</td>
+            <td>
+                <select name="tel1" >
+                    <option value="선택"></option>
+                    <option value="010">010</option>
+                    <option value="011">011</option>
+                    <option value="016">016</option>
+                </select>
+                <input type="number" name="tel2">
+                -
+                <input type="number" name="tel3">
+            </td>
+        </tr>
+        <tr>
+            <td>주소</td>
+            <td>
+                <input type="text" id="sample4_postcode" placeholder="우편번호" name="address1">
+                <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                <input type="text" id="sample4_roadAddress" placeholder="도로명주소" name="address2">
+                <input type="text" id="sample4_jibunAddress" placeholder="지번주소" name="address3">
+                <span id="guide" style="color:#999;display:none"></span>
+                <input type="text" id="sample4_detailAddress" placeholder="상세주소" name="address4">
+            </td>
+        </tr>
+        <tr>
+            <td>배송메세지</td>
+            <td>
+                <textarea name="contents" cols="30" rows="2"></textarea>
+            </td>
+        </tr>
+    </table>
+    <br>
+        <h3>선택상품</h3>
+    <table border="1" style="width:50%;">
+        <tr>
+            <td>사진</td>
+            <td>이름</td>
+            <td>수량</td>
+            <td>가격</td>
+        </tr>
+        <tr th:each="dtos:${dtos}">
+            <td>
+                <img th:src="@{|/thumb/Thumb_${dtos.item.itemFileEntities.get(0).StoredFileName}|}" style="width:100px; height:100px" >
+            </td>
+            <td th:text="${dtos.item.name}"></td>
+            <input type="hidden" name="itemIdx" th:value="${dtos.item.idx}">
+            <input type="hidden" name="itemIdx" th:value="${dtos.quantity}">
+            <td th:text="${dtos.quantity}"></td>
+            <td th:text="${#numbers.formatInteger(dtos.item.price * dtos.quantity, 0, 'COMMA')} + '원'"></td>
+        </tr>
+    </table>
+    <br>
+        <h3>결제 정보</h3>
+    <table border="1" style="width:50%">
+        <tr>
+            <td>배송비</td>
+            <td>무료</td>
+        </tr>
+        <tr>
+            <td>할인</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>총 가격</td>
+            <td style="width: 600px;" th:text="${total}"></td>
+            <input type="hidden"name="total" th:value="${total}">
+        </tr>
+    </table>
+    <br>
+    <br>
+    <br>
+    <table border="1" style="width:50%">
+        <tr>
+            <td>
+                <div class="title">결제 방법</div>
+                <div id="payment-method"></div>
+                <div id="agreement"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!-- 결제 버튼 -->
+                <input type="submit" id="payment-button" value="결제하기">
+            </td>
+        </tr>
+    </table>
+    </form>
 </div>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -156,33 +191,14 @@
     const clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq' // 상점을 특정하는 키
     const customerKey = 'YbX2HuSlsC9uVJW6NMRMj' // 결제 고객을 특정하는 키
     const amount = 15_000 // 결제 금액
-    const couponAmount = 5_000 // 할인 쿠폰 금액
 
     /*결제위젯 영역 렌더링*/
     const paymentWidget = PaymentWidget(clientKey, customerKey) // 회원 결제
-    // const paymentWidget = PaymentWidget(clientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
     paymentMethods = paymentWidget.renderPaymentMethods('#payment-method', amount)
 
     /*약관 영역 렌더링*/
     const paymentAgreement = paymentWidget.renderAgreement('#agreement')
 
-    /*결제창 열기*/
-    document.querySelector("#payment-button").addEventListener("click",()=>{
-      paymentWidget.requestPayment({
-        orderId: 'AD8aZDpbzXs4EQa-UkIX6',
-        orderName: '토스 티셔츠',
-        successUrl: 'http://localhost:8080/success',
-        failUrl: 'http://localhost:8080/fail',
-        customerEmail: 'customer123@gmail.com',
-        customerName: '김토스'
-        }).catch(function (error) {
-            if (error.code === 'USER_CANCEL') {
-            // 결제 고객이 결제창을 닫았을 때 에러 처리
-            } if (error.code === 'INVALID_CARD_COMPANY') {
-              // 유효하지 않은 카드 코드에 대한 에러 처리
-            }
-        })
-    })
 </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package portfolio.test1.entity;
+package portfolio.test1.entity.Pay;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,6 +19,7 @@ public class DeliveryEntity {
     private String address1;
     //주소
     private String address2;
+
 
     private String tel;
 

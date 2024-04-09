@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import portfolio.test1.DTO.*;
+import portfolio.test1.DTO.Pay.DeliveryDTO;
 import portfolio.test1.Repositiry.CartRepository;
 import portfolio.test1.Repositiry.CategoryRepository;
 import portfolio.test1.Service.ItemService;
@@ -175,6 +176,12 @@ public class ShopController {
         //총 결제 해야할 금액 표시
         model.addAttribute("total",totalPay);
         return "/Buy";
+    }
+
+    @PostMapping("/buy-item")
+    public void delivery(@ModelAttribute DeliveryDTO deliveryDTO) {
+
+
     }
 
 }

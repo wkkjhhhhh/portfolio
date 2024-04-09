@@ -1,8 +1,11 @@
-package portfolio.test1.entity;
+package portfolio.test1.entity.Pay;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import portfolio.test1.entity.BaseEntity;
+import portfolio.test1.entity.CartEntity;
+import portfolio.test1.entity.Pay.DeliveryEntity;
 
 import java.util.ArrayList;
 import java.util.List;
