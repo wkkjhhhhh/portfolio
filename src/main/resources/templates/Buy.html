@@ -37,7 +37,7 @@
         <tr>
             <td>이름</td>
             <td>
-                <input type="text" name="username">
+                <input type="text" name="username" th:value="${user.name}" readonly>
             </td>
         </tr>
         <tr>
@@ -86,8 +86,8 @@
                 <img th:src="@{|/thumb/Thumb_${dtos.item.itemFileEntities.get(0).StoredFileName}|}" style="width:100px; height:100px" >
             </td>
             <td th:text="${dtos.item.name}"></td>
-            <input type="hidden" name="itemIdx" th:value="${dtos.item.idx}">
-            <input type="hidden" name="itemIdx" th:value="${dtos.quantity}">
+            <input type="hidden" name="itemIdx" th:value="${dtos.idx}">
+            <input type="hidden" name="itemQuantity" th:value="${dtos.quantity}">
             <td th:text="${dtos.quantity}"></td>
             <td th:text="${#numbers.formatInteger(dtos.item.price * dtos.quantity, 0, 'COMMA')} + '원'"></td>
         </tr>

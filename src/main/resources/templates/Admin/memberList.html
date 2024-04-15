@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}"
+      layout:fragment="Content">
 <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>admin</title>
 </head>
 <body>
@@ -10,7 +12,6 @@
     <tr>
         <th>번호</th>
         <th>아이디</th>
-        <th>비밀번호</th>
         <th>이름</th>
         <th>휴대폰</th>
         <th>이메일</th>
@@ -21,18 +22,21 @@
     <tr th:each="board: ${member}">
         <td th:text="${board.idx}"></td>
         <td th:text="${board.userid}"></td>
-        <td th:text="${board.pwd}"></td>
         <td th:text="${board.name}"></td>
         <td th:text="${board.phone1 + '-' + board.phone2 + '-' + board.phone3}"></td>
         <td th:text="${board.email}"></td>
         <td th:text="${board.deposit}"></td>
         <td th:text="*{#temporals.format(board.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
         <td>
-            <button th:href="@{|/Admin/modify/${board.idx}|}">수정</button>
-            <button th:href="@{|/Admin/delete/${board.idx}|}">삭제</button>
+            <button th:href="@{|/Admin/MemberUpdate/${board.idx}|}">수정</button>
+            <button th:href="@{|/Admin/MemberDelete/${board.idx}|}">삭제</button>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="8">
+            <button type="button">뒤로가기</button>
         </td>
     </tr>
 </table>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

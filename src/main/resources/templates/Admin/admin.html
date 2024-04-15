@@ -1,28 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}"
+      layout:fragment="Content">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <button onclick="saveReq()">상품등록</button>
-    <button onclick="updateReq()">상품수정</button>
-    <button onclick="ListReq()">회원목록</button>
-    <button onclick="CategoryReq()()">카테고리 생성</button>
+    <div th:replace="/fragments/carousel :: Carousel"></div>
 </body>
 </html>
-
-<script>
-    const saveReq = () => {
-        location.href = "/Admin/write";
-    }
-    const updateReq = () => {
-        location.href = "/Admin/itemlist";
-    }
-    const ListReq = () => {
-        location.href = "/Admin/memberList";
-    }
-     const CategoryReq = () => {
-        location.href = "/Admin/CategoryCreate";
-    }
-</script>

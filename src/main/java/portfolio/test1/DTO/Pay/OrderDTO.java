@@ -1,20 +1,27 @@
+
 package portfolio.test1.DTO.Pay;
 
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import portfolio.test1.entity.ItemEntity;
+
+import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class BuyItemDTO {
+public class OrderDTO {
 
     private Long idx;
 
-    private int itemIdx;
+    private ItemEntity item;
+
+    private int price;
 
     private int quantity;
+
+
+
 }
+

@@ -19,6 +19,7 @@ public class ItemListDTO {
     private Long idx;
     private String name;
     private int price;
+    private String contents;
     private String storedFile;
     private LocalDateTime updatedTime;
     private int fileAttached;
@@ -30,6 +31,7 @@ public class ItemListDTO {
         itemListDTO.setIdx(itemEntity.getIdx());
         itemListDTO.setName(itemEntity.getName());
         itemListDTO.setPrice(itemEntity.getPrice());
+        itemListDTO.setContents(itemEntity.getContents());
         itemListDTO.setStoredFile(itemEntity.getItemFileEntities().get(0).getStoredFileName());
         itemListDTO.setUpdatedTime(itemEntity.getUpdatedTime());
         itemListDTO.setFileAttached(itemEntity.getFileAttached());

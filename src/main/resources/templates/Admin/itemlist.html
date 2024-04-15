@@ -1,29 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}"
+      layout:fragment="Content">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <table>
-        <tr>
-            <td>번호</td>
-            <td>사진</td>>
-            <td>이름</td>
-            <td>가격</td>
-            <td>카테고리</td>
-            <td>파일여부</td>
-        </tr>
-        <tr th:each="dtos : ${dtos}">
-            <td th:text="${dtos.idx}"></td>
-            <td><img th:src="@{|/thumb/Thumb_${dtos.storedFile}|}" ></td>
-            <td th:text="${dtos.name}"></td>
-            <td th:text="${dtos.price}"></td>
-            <td th:text="${dtos.fileAttached}"></td>
-            <td><a th:href="@{|/Admin/modify/${dtos.idx}|}"><button>수정</button></a></td>
-            <td><a th:href="@{|/Admin/delete/${dtos.idx}|}"><button>삭제</button></a></td>
-        </tr>
-    </table>
+<h3 style="text-align: center">상품 목록</h3>
+<div class="container">
+    <div class="row">
+        <div th:each="dtos : ${dtos}" class="col-md-3">
+            <div class="card" style="width: 18rem;">
+                <img th:src="@{|/thumb/Thumb_${dtos.storedFile}|}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${dtos.name}"></h5>
+                    <p class="card-text" th:text="${dtos.contents}"></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:text="${dtos.price}"></li>
+                    <li class="list-group-item" th:text="${dtos.fileAttached}"></li>
+                </ul>
+                <div class="card-body">
+                    <a th:href="@{|/Admin/modify/${dtos.idx}|}" class="card-link">수정</a>
+                    <a th:href="@{|/Admin/delete/${dtos.idx}|}" class="card-link">삭제</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
 

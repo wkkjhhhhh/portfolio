@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- Thymeleaf 선언 / headerFragment 임을 선언-->
+<!--네비게이션 부분-->
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="Header">
+<!--fixed-top : 상단 고정-->
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/Admin/admin">관리자 페이지</a>
+        <nav class="nav nav-pills flex-column flex-sm-row">
+            <a class="flex-sm-fill text-sm-center nav-link" href="/Admin/write">상품등록</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="/Admin/itemlist">상품수정</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="/Admin/memberList">회원목록</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="/Admin/CategoryCreate">카테고리 생성</a>
+            <a class="flex-sm-fill text-sm-center nav-link" href="/">돌아가기</a>
+        </nav>
+        <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<!--네비게이션이 상단에 고정되었기때문에 빈공간을 제공-->
+</html>

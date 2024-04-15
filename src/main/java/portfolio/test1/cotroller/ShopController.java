@@ -7,15 +7,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import portfolio.test1.DTO.*;
+import portfolio.test1.DTO.Pay.OrderDTO;
 import portfolio.test1.DTO.Pay.DeliveryDTO;
 import portfolio.test1.Repositiry.CartRepository;
 import portfolio.test1.Repositiry.CategoryRepository;
 import portfolio.test1.Service.ItemService;
 import portfolio.test1.Service.MemberService;
+import portfolio.test1.Service.PaySerivce;
 import portfolio.test1.config.CustomUserDetails;
 import portfolio.test1.entity.CartEntity;
 import portfolio.test1.entity.CategoryEntity;
+import portfolio.test1.entity.Pay.OrderEntity;
+import portfolio.test1.entity.Pay.OrderItemEntity;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,13 +35,15 @@ public class ShopController {
     private final CategoryRepository categoryRepository;
     private final ItemService itemService;
     private final CartRepository cartRepository;
+    private final PaySerivce paySerivce;
 
 
-    public ShopController(MemberService memberService, CategoryRepository categoryRepository, ItemService itemService, CartRepository cartRepository) {
+    public ShopController(MemberService memberService, CategoryRepository categoryRepository, ItemService itemService, CartRepository cartRepository, PaySerivce paySerivce) {
         this.memberService = memberService;
         this.categoryRepository = categoryRepository;
         this.itemService = itemService;
         this.cartRepository = cartRepository;
+        this.paySerivce = paySerivce;
     }
 
     @ModelAttribute
@@ -178,9 +185,20 @@ public class ShopController {
         return "/Buy";
     }
 
+    /**
+     * 주문 저장
+     * @param deliveryDTO 배송지 정보
+     */
     @PostMapping("/buy-item")
-    public void delivery(@ModelAttribute DeliveryDTO deliveryDTO) {
+    public void delivery(@ModelAttribute DeliveryDTO deliveryDTO,
+                         @AuthenticationPrincipal CustomUserDetails customUserDetails,
+                         @RequestParam("itemIdx")List<Long> idx) {
 
+        String username = customUserDetails.getUsername();
+
+        paySerivce.save(deliveryDTO,idx,username);
+        //배송지 저장
+        //paySerivce.save(deliveryDTO);
 
     }
 

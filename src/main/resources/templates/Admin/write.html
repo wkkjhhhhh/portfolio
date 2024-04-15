@@ -1,54 +1,64 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}"
+      layout:fragment="Content">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <form action="/Admin/save" method="post" enctype="multipart/form-data">
-    <table>
-        <tr>
-            <td>이름</td>
-            <td><input type="text" name="name"></td>
-        </tr>
-        <tr>
-            <td>가격</td>
-            <td><input type="number" name="price"></td>
-        </tr>
-        <tr>
-            <td>설명</td>
-            <td><textarea rows="10" name="contents"></textarea></td>
-        </tr>
-        <tr>
-            <td>카테고리</td>
-            <td>
-                <select name="first" id="first" onchange="changeFirst()">
-                    <option value="">선택</option>
-                    <option th:each="category : ${category}" th:value="${category.first}" th:text="${category.categoryName}"></option>
-                </select>
-
-                <select name="second" id="second" style="display:none;" onchange="changeSecond()">
-                    <option value="0" selected>선택</option>
-                </select>
-
-                <select name="third" id="third" style="display:none;">
-                    <option value="0" selected>선택</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>옷 사진</td>
-            <td>썸네일
-                <input type="file" name="itemFile">
-                <input type="file" name="itemFile">
-                <input type="file" name="itemFile"></td>
-        </tr>
-        <tr>
-            <td>
-                <input type="submit" value="등록">
-            </td>
-        </tr>
-    </table>
+    <div style="text-align: center; max-width: 700px; margin: 4rem auto; ">
+        <h3>상품 등록</h3>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">상품 이름</span>
+            <input type="text" name="name" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <hr>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2">가격</span>
+            <input type="number" name="price" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <hr>
+        <div class="input-group">
+            <span class="input-group-text">설명</span>
+            <textarea class="form-control" aria-label="With textarea" name="contents"></textarea>
+        </div>
+        <hr>
+        <label class="input-group-text" for="first">카테고리</label>
+            <select class="form-select" name="first" id="first" onchange="changeFirst()">
+                <option value="">선택</option>
+                <option th:each="category : ${category}" th:value="${category.first}" th:text="${category.categoryName}"></option>
+            </select>
+        <hr>
+        <label class="input-group-text" for="second">중분류</label>
+            <select class="form-select" name="second" id="second" style="display:none;" onchange="changeSecond()">
+                <option value="0" selected>선택</option>
+            </select>
+        <hr>
+        <label class="input-group-text" for="third">소분류</label>
+            <select class="form-select" name="third" id="third" style="display:none;">
+                <option value="0" selected>선택</option>
+            </select>
+        <hr>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupFile01">썸네일용 사진</label>
+            <input type="file" class="form-control" id="inputGroupFile01" name="itemFile">
+        </div>
+        <hr>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupFile01">두번째 사진</label>
+            <input type="file" class="form-control" id="inputGroupFile02" name="itemFile">
+        </div>
+        <hr>
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupFile01">세번째 사진</label>
+            <input type="file" class="form-control" id="inputGroupFile03" name="itemFile">
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-outline-secondary">등록</button>
+    </div>
 </form>
 </body>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>

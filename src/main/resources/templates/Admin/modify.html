@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/layout}"
+      layout:fragment="Content">
+<head th:replace="config/config_layout :: ConfigFragment">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -60,7 +63,7 @@
         <tr>
             <td>
                 <input type="hidden" th:value="${item.idx}" name="idx">
-                <input type="submit" value="수정">
+                <button type="submit" class="btn btn-primary">수정</button>
             </td>
         </tr>
     </table>
