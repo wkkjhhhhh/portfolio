@@ -21,13 +21,13 @@ public class OrderEntity extends BaseEntity {
     private String username;
 
     //구매할 아이템
-    @OneToMany(mappedBy = "orderEntity")
+
+    @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.REMOVE)
     private List<OrderItemEntity> items = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "delivery_idx")
     private DeliveryEntity deliveryEntity;
-
 
     //연관관계 편의 메서드//
     public void addItem(OrderItemEntity orderItem) {

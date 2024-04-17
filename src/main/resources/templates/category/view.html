@@ -53,9 +53,12 @@
     copyRightⓒ
 </div>
 </body>
-<script>
+<script th:inline="javascript">
     const buyReq = () => {
-        location.href = "/buy";
+        var idx = [[${dto.idx}]];
+        var quantity = document.getElementById('quantity').value;
+
+        location.href = "/buy?idx=" + idx + "&quantity=" + quantity;
     }
 
     var quantity = parseInt(document.getElementById('quantity').value); // quantity를 문자열에서 정수로 변환

@@ -6,8 +6,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import portfolio.test1.DTO.MemberDTO;
 import portfolio.test1.DTO.MyUserDto;
+import portfolio.test1.Repositiry.CartRepository;
 import portfolio.test1.Repositiry.MemberRepository;
+import portfolio.test1.Repositiry.OrderRepository;
+import portfolio.test1.entity.CartEntity;
 import portfolio.test1.entity.MemberEntity;
+import portfolio.test1.entity.Pay.OrderEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +23,17 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CartRepository cartRepository;
+    private final OrderRepository orderRepository;
 
 
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CartRepository cartRepository, OrderRepository orderRepository) {
 
 
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
+        this.cartRepository = cartRepository;
+        this.orderRepository = orderRepository;
     }
 
     ///////회원가입
@@ -75,6 +83,19 @@ public class MemberService {
     }
 
     public void delete(Long idx) {
+        String userid = memberRepository.findById(idx).orElse(null).getUserid();
+
+        List<CartEntity> byUsername = cartRepository.findByUsername(userid);
+        List<OrderEntity> orderEntityList = orderRepository.findByUsername(userid);
+
+
+        for (CartEntity cartEntity : byUsername) {
+            cartRepository.delete(cartEntity);
+        }
+        for (OrderEntity orderEntity : orderEntityList) {
+            orderRepository.delete(orderEntity);
+        }
+
         memberRepository.deleteById(idx);
     }
 }

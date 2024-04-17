@@ -11,12 +11,15 @@ import portfolio.test1.DTO.Pay.OrderDTO;
 import portfolio.test1.DTO.Pay.DeliveryDTO;
 import portfolio.test1.Repositiry.CartRepository;
 import portfolio.test1.Repositiry.CategoryRepository;
+import portfolio.test1.Repositiry.ItemRepository;
+import portfolio.test1.Repositiry.OrderRepository;
 import portfolio.test1.Service.ItemService;
 import portfolio.test1.Service.MemberService;
 import portfolio.test1.Service.PaySerivce;
 import portfolio.test1.config.CustomUserDetails;
 import portfolio.test1.entity.CartEntity;
 import portfolio.test1.entity.CategoryEntity;
+import portfolio.test1.entity.ItemEntity;
 import portfolio.test1.entity.Pay.OrderEntity;
 import portfolio.test1.entity.Pay.OrderItemEntity;
 
@@ -36,14 +39,18 @@ public class ShopController {
     private final ItemService itemService;
     private final CartRepository cartRepository;
     private final PaySerivce paySerivce;
+    private final OrderRepository orderRepository;
+    private final ItemRepository itemRepository;
 
 
-    public ShopController(MemberService memberService, CategoryRepository categoryRepository, ItemService itemService, CartRepository cartRepository, PaySerivce paySerivce) {
+    public ShopController(MemberService memberService, CategoryRepository categoryRepository, ItemService itemService, CartRepository cartRepository, PaySerivce paySerivce, OrderRepository orderRepository, ItemRepository itemRepository) {
         this.memberService = memberService;
         this.categoryRepository = categoryRepository;
         this.itemService = itemService;
         this.cartRepository = cartRepository;
         this.paySerivce = paySerivce;
+        this.orderRepository = orderRepository;
+        this.itemRepository = itemRepository;
     }
 
     @ModelAttribute
@@ -143,6 +150,12 @@ public class ShopController {
         return "redirect:/cart";
     }
 
+    /**
+     *  네 페이지
+     * @param customUserDetails 내 아이디 확인
+     * @param model 회원 정보, 결제 내역
+     * @return 내정보창
+     */
     @GetMapping("/mypage")
     public String mypage(@AuthenticationPrincipal CustomUserDetails customUserDetails,Model model) {
         String username = customUserDetails.getUsername();
@@ -185,21 +198,52 @@ public class ShopController {
         return "/Buy";
     }
 
+    @GetMapping("/buy")
+    public String buyIt(@RequestParam("idx")Long idx,
+                        @RequestParam("quantity") int quantity,
+                        Model model,
+                        @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        String username = customUserDetails.getUsername();
+
+        //아이템 보내주기
+        ItemEntity item = itemRepository.findById(idx).orElse(null);
+        List<CartDTO> cartDTOs = new ArrayList<>();
+        CartDTO dto = new CartDTO();
+        dto.setItem(item);
+        dto.setQuantity(quantity);
+        dto.setUsername(username);
+        cartDTOs.add(dto);
+        model.addAttribute("dtos",cartDTOs);
+
+        //회원정보
+        MyUserDto user = memberService.findUserid(username);
+        model.addAttribute("user",user);
+
+
+        //총 결제 해야할 금액 표시
+        int totalPay = quantity * item.getPrice();
+        model.addAttribute("total",totalPay);
+
+        return "/Buy";
+    }
+
     /**
      * 주문 저장
      * @param deliveryDTO 배송지 정보
+     *   장바구니 x 바로구매가능
      */
     @PostMapping("/buy-item")
-    public void delivery(@ModelAttribute DeliveryDTO deliveryDTO,
+    public String delivery(@ModelAttribute DeliveryDTO deliveryDTO,
                          @AuthenticationPrincipal CustomUserDetails customUserDetails,
-                         @RequestParam("itemIdx")List<Long> idx) {
+                         @RequestParam(name = "CartIdx")List<Long> idx,
+                          @RequestParam(name="ItemIdx") Long itemIdx,
+                           @RequestParam(name = "itemQuantity")int quantity) {
 
-        String username = customUserDetails.getUsername();
-
-        paySerivce.save(deliveryDTO,idx,username);
-        //배송지 저장
-        //paySerivce.save(deliveryDTO);
-
+            String username = customUserDetails.getUsername();
+            //배송지 저장
+            paySerivce.save(deliveryDTO, idx, username,itemIdx,quantity);
+            
+        return "/home";
     }
 
 }

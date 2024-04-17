@@ -143,7 +143,7 @@ public class AdminController {
 
         itemService.delete(idx);
 
-        return "/Admin/admin";
+        return "/Admin/itemlist";
     }
     @GetMapping("/CategoryCreate")
     public String Category(Model model) {
@@ -194,7 +194,7 @@ public class AdminController {
        return dtos;
     }
     @GetMapping("/MemberDelete/{idx}")
-    public String MemberUpdate(@PathVariable("idx") Long idx, Model model) {
+    public String MemberDelete(@PathVariable("idx") Long idx, Model model) {
         log.info(idx);
         memberService.delete(idx);
 

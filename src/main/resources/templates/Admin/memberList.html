@@ -28,13 +28,14 @@
         <td th:text="${board.deposit}"></td>
         <td th:text="*{#temporals.format(board.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
         <td>
-            <button th:href="@{|/Admin/MemberUpdate/${board.idx}|}">수정</button>
-            <button th:href="@{|/Admin/MemberDelete/${board.idx}|}">삭제</button>
+            <button type="button">
+                <a th:href="@{|/Admin/MemberDelete/${board.idx}|}">삭제</a>
+            </button>
         </td>
     </tr>
     <tr>
         <td colspan="8">
-            <button type="button">뒤로가기</button>
+            <button type="button" onclick="location.href='/Admin/admin'">홈으로</button>
         </td>
     </tr>
 </table>

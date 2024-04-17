@@ -86,8 +86,9 @@
                 <img th:src="@{|/thumb/Thumb_${dtos.item.itemFileEntities.get(0).StoredFileName}|}" style="width:100px; height:100px" >
             </td>
             <td th:text="${dtos.item.name}"></td>
-            <input type="hidden" name="itemIdx" th:value="${dtos.idx}">
+            <input type="hidden" name="CartIdx" th:value="${dtos.idx != null} ? ${dtos.idx} : 0">
             <input type="hidden" name="itemQuantity" th:value="${dtos.quantity}">
+            <input type="hidden" name="ItemIdx" th:value="${dtos.item.idx}">
             <td th:text="${dtos.quantity}"></td>
             <td th:text="${#numbers.formatInteger(dtos.item.price * dtos.quantity, 0, 'COMMA')} + '원'"></td>
         </tr>
