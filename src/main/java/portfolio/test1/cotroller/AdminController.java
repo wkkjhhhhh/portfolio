@@ -139,7 +139,7 @@ public class AdminController {
         return "/Admin/admin";
     }
     @GetMapping("/delete/{idx}")
-    public String delete(@PathVariable("idx") Long idx) {
+    public String delete(@PathVariable("idx") Long idx,Model model) {
 
         itemService.delete(idx);
 

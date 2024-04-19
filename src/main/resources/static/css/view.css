@@ -1,6 +1,7 @@
+
 #view {
     display:grid;
-    align-items: center; /* 세로 방향 가운데 정렬 */
+    align-items: center;
     grid-template-columns: 1.8fr 0.6fr;
 }
 #view_div {
@@ -9,10 +10,10 @@
 #view_contents {
     position: fixed;
     width: 450px;
-    top: 50%; /* Adjust as needed */
-    left: 80%; /* Adjust as needed */
+    top: 50%;
+    left: 80%;
     transform: translate(-50%, -50%);
-    background-color: white; /* Ensure it's readable */
+    background-color: white;
     padding: 50px;
-    border: 6px solid #ccc; /* Add borders for clarity */
+    border: 6px solid #ccc;
     }

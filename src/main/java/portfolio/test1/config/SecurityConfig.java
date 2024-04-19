@@ -41,9 +41,6 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable);
         http
                 .authorizeHttpRequests(request->request
-                        //.requestMatchers("/home","/","/join","/join_proc", "/login/**",
-                               // "/standard","/category/**","/idcheck","/Item/**",
-                               // "/css/**","/js/**","/img/**","/outer").permitAll()
                         .requestMatchers("/Admin/**").hasRole("ADMIN")
                         .requestMatchers("/mypage/**","/logout/**","cart/**").hasRole("USER")
                         .anyRequest().permitAll());
@@ -53,7 +50,7 @@ public class SecurityConfig {
                         .loginProcessingUrl("/login_proc") // 로그인 버튼 클릭시 이동
                         .usernameParameter("userid") // 아이디 받아오기
                         .passwordParameter("pwd") // 비밀번호 받아오기
-                        //.successHandler(customAuthenticationSuccessHandler) // 이거 추가함
+                        //.successHandler(customAuthenticationSuccessHandler) // 이거 추가함 현재 사용x
                         .defaultSuccessUrl("/",true)
                         .permitAll()
                 )

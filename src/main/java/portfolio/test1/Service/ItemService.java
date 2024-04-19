@@ -84,8 +84,8 @@ public class ItemService {
 
         List<ItemListDTO> listDTOS = new ArrayList<>();
 
-        for(int i=0; i<list.size(); i++) {
-            ItemListDTO dto = ItemListDTO.toChange(list.get(i));
+        for (ItemEntity itemEntity : list) {
+            ItemListDTO dto = ItemListDTO.toChange(itemEntity);
             listDTOS.add(dto);
         }
         return listDTOS;

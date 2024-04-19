@@ -49,8 +49,7 @@
             <a th:href="${dtos.last} ? '#' : @{/category/list/{idx}(idx=${Category_idx},page=${dtos.number + 1})}">next</a>
 
                 <!-- 마지막 페이지로 이동 -->
-            <a th:href="@{/category/list/{idx}(idx=${Category_idx},page=${dtos.totalPages})}">▶</a>
-
+            <a  th:href="@{/category/list/{idx}(idx=${Category_idx},page=${dtos.totalPages})}">▶</a>
     </div>
 </div>
 <div id="footer">

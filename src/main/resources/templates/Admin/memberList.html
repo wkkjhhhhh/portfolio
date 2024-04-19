@@ -9,6 +9,7 @@
 </head>
 <body>
 <table class="table table-hover">
+    <thead>
     <tr>
         <th>번호</th>
         <th>아이디</th>
@@ -19,6 +20,8 @@
         <th>등록날짜</th>
         <th></th>
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="board: ${member}">
         <td th:text="${board.idx}"></td>
         <td th:text="${board.userid}"></td>
@@ -34,10 +37,11 @@
         </td>
     </tr>
     <tr>
-        <td colspan="8">
+        <td colspan="8" align="center">
             <button type="button" onclick="location.href='/Admin/admin'">홈으로</button>
         </td>
     </tr>
+    </tbody>
 </table>
 </body>
 </html>
