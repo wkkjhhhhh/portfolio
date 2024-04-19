@@ -3,7 +3,9 @@
 <p>
   <img src="https://img.shields.io/badge/SpringBoot-\?style=flat-square&logo=springboot&logoColor=black"/>
   <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat-square&logo=thymeleaf&logoColor=black"/>
-    <img src="https://img.shields.io/badge/bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=black"/>
+  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=black"/>
+  <img src="https://img.shields.io/badge/bootstrap-#F7DF1E?style=flat-square&logo=bootstrap&logoColor=black"/>
+    
 </p>
 
 ## 개요
