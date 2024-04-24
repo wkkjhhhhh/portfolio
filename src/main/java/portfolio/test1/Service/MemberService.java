@@ -8,9 +8,11 @@ import portfolio.test1.DTO.MemberDTO;
 import portfolio.test1.DTO.MyUserDto;
 import portfolio.test1.Repositiry.CartRepository;
 import portfolio.test1.Repositiry.MemberRepository;
+import portfolio.test1.Repositiry.OAuthUserRepository;
 import portfolio.test1.Repositiry.OrderRepository;
 import portfolio.test1.entity.CartEntity;
 import portfolio.test1.entity.MemberEntity;
+import portfolio.test1.entity.OAuthUserEntity;
 import portfolio.test1.entity.Pay.OrderEntity;
 
 import java.util.ArrayList;
@@ -25,15 +27,17 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
     private final OrderRepository orderRepository;
+    private final OAuthUserRepository oAuthUserRepository;
 
 
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CartRepository cartRepository, OrderRepository orderRepository) {
+    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CartRepository cartRepository, OrderRepository orderRepository, OAuthUserRepository oAuthUserRepository) {
 
 
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
         this.cartRepository = cartRepository;
         this.orderRepository = orderRepository;
+        this.oAuthUserRepository = oAuthUserRepository;
     }
 
     ///////회원가입
@@ -54,7 +58,8 @@ public class MemberService {
 
     // view (my page)
     public MyUserDto findUserid(String username) {
-       Optional<MemberEntity> member = memberRepository.findByUserid(username);
+        OAuthUserEntity oAuthUSer = oAuthUserRepository.findByUsername(username);
+        Optional<MemberEntity> member = memberRepository.findByUserid(username);
 
         if(member.isPresent()) {
             MemberEntity entity = member.get();
@@ -68,7 +73,10 @@ public class MemberService {
                     .build();
        }else {
 
-        return null;
+        return MyUserDto.builder()
+                .userid(oAuthUSer.getUsername().substring(0,5))
+                .email(oAuthUSer.getEmail())
+                .build();
        }
     }
     //list

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import portfolio.test1.DTO.*;
+import portfolio.test1.DTO.OAuth2.CustomOAuth2User;
 import portfolio.test1.DTO.Pay.OrderDTO;
 import portfolio.test1.DTO.Pay.DeliveryDTO;
 import portfolio.test1.Repositiry.CartRepository;
@@ -41,6 +42,7 @@ public class ShopController {
     private final PaySerivce paySerivce;
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
+    private CustomOAuth2User customUserDetails;
 
 
     public ShopController(MemberService memberService, CategoryRepository categoryRepository, ItemService itemService, CartRepository cartRepository, PaySerivce paySerivce, OrderRepository orderRepository, ItemRepository itemRepository) {
@@ -69,8 +71,8 @@ public class ShopController {
 
     }
     @GetMapping("/")
-    public String list(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        String username = customUserDetails.getUsername(); //세션 username
+    public String list() {
+        //String username = customUserDetails.getUsername(); //세션 username
 
 
         return "home";
@@ -110,11 +112,18 @@ public class ShopController {
     }
     @GetMapping("/cart")
     public String cart(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                       @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
                        @RequestParam(name = "item_idx" ,required = false)Long idx ,
                        @RequestParam(name = "quantity",required = false)Integer quantity,
                        Model model) {
+        String username = null;
+        if(customUserDetails.getUsername() != null) {
+             username = customUserDetails.getUsername();
+        }else {
+            username = customOAuth2User.getUsername();
+        }
 
-        String username = customUserDetails.getUsername();
+
         if(idx != null && quantity != null && idx != 0 && quantity != 0) {
             itemService.saveCart(username, idx, quantity);
         }
@@ -157,8 +166,17 @@ public class ShopController {
      * @return 내정보창
      */
     @GetMapping("/mypage")
-    public String mypage(@AuthenticationPrincipal CustomUserDetails customUserDetails,Model model) {
-        String username = customUserDetails.getUsername();
+    public String mypage(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                         @AuthenticationPrincipal CustomOAuth2User customOAuth2User,
+
+                         Model model) {
+        String username = null;
+        if(customUserDetails != null) {
+            username = customUserDetails.getUsername();
+        }else {
+             username = customOAuth2User.getUsername();
+        }
+
 
        MyUserDto dto = memberService.findUserid(username);
 
@@ -170,14 +188,15 @@ public class ShopController {
     /**
      * @param idx 구매할 장바구니
      * @param totalPay 총 결제 금액
-     * @param customUserDetails 로그인한 회원
+     * @param principal 로그인한 회원
      * @return 결제 창
      */
     @PostMapping("/buy")
     public String Buy(@RequestParam("check") List<Long> idx,
                       @RequestParam("totalPay")String totalPay,
                       Model model,
-                      @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+                      //@AuthenticationPrincipal CustomUserDetails customUserDetails
+                      Principal principal) {
         List<CartDTO> cartDTOs = new ArrayList<>();
         for(int i=0; i< idx.size(); i++) {
             CartEntity cartEntity = cartRepository.findById(idx.get(i)).orElse(null);
@@ -187,7 +206,7 @@ public class ShopController {
             }
         }
 
-        String username = customUserDetails.getUsername();
+        String username = principal.getName();
         MyUserDto user = memberService.findUserid(username);
         //회원 정보
         model.addAttribute("user",user);
