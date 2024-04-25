@@ -11,7 +11,7 @@
 
 ## 개요
 
-앱설명, 사이트 링크 넣기
+홈쇼핑 / https://github.com/wkkjhhhhh/portfolio
 
 ## 기능
 
