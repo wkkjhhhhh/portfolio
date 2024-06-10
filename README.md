@@ -1,4 +1,4 @@
-# 프로젝트 제목 넣기
+# 쇼핑몰(개인 프로젝트)
 
 <p>
   <img src="https://img.shields.io/badge/SpringBoot-\?style=flat-square&logo=springboot&logoColor=black"/>
